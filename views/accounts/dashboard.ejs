@@ -47,7 +47,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="/profile" class="dropdown-toggle">
-              <img src="/img/<%= user.profile.picture != '' ? '':'default.jpg'%>" class="user-image" alt="User Image">
+              <img src="<%= user.profile.picture != '' ? '/uploads/'+user.profile.picture:'/img/default.jpg'%>" class="user-image" alt="User Image">
               <span class="hidden-xs"><%= user.profile.name %></span>
             </a>
           </li>
@@ -62,43 +62,76 @@
   </header>
 
   <section class="content" style="margin-top:20px;">
+    <% if (error.length > 0) { %>
+      <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Error!</strong> <%= error %>
+      </div>
+    <% } %>
+    <% if (message.length > 0) { %>
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Updated!</strong> <%= message %>
+      </div>
+    <% } %>    
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
-        <!-- general form elements -->
-        <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">Profile</h3>
+        <div class="box box-widget widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <div class="widget-user-header bg-aqua-active">
+            <h3 class="widget-user-username"><%= user.profile.name %></h3>
+            <h5 class="widget-user-desc"><%= user.profile.designation != undefined && user.profile.designation != ''?user.profile.designation:'' %></h5>
           </div>
-          <!-- /.box-header -->
-          <!-- form start -->
-          <form role="form">
-            <div class="box-body">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Name</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Email</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Address</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputFile">Profile Image</label>
-                <input type="file" id="exampleInputFile">
+          <div class="widget-user-image">
+            <img class="img-circle" height="10" width="50" src="<%= user.profile.picture != '' ? '/uploads/'+user.profile.picture:'/img/default.jpg'%>" alt="User Avatar">
+          </div>
+          <div class="box-footer">
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Profile</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <!-- form start -->
+                  <form role="form" method="post" action="/postProfile" enctype="multipart/form-data">
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" name="username" value="<%= user.profile.name %>" class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Designation</label>
+                        <input type="text" name="userdesignation" value="<%= user.profile.designation != undefined && user.profile.designation != ''?user.profile.designation:'' %>" class="form-control" id="exampleInputPassword1" placeholder="Enter Email">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Email</label>
+                        <input type="email" disabled='disabled' name="useremail" value="<%= user.email %>" class="form-control" id="exampleInputPassword1" placeholder="Enter Email">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Address</label>
+                        <input type="text" name="useraddress" value="<%= user.address != undefined && user.address != ''?user.address:'' %>" class="form-control" id="exampleInputPassword1" placeholder="Enter address">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputFile">Profile Image</label>
+                        <input type="file" id="exampleInputFile" name="profilePic">
+                      </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.box -->
               </div>
             </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
+            <!-- /.row -->
+          </div>
         </div>
-        <!-- /.box -->
       </div>
-    </div>
+    </div>    
   </section>
 </div>
 <!-- ./wrapper -->

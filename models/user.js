@@ -17,7 +17,8 @@ var UserSchema = new Schema({
 
 	profile: {
 		name: {type: String, default: ''},
-		picture: {type: String, default: ''}
+		picture: {type: String, default: ''},
+		designation:{type: String, default: ''}
 	},
 
 	address: String
