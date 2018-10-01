@@ -80,7 +80,6 @@ passport.use(new GoogleStrategy(secret.google,
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ google: profile.id }, function(err, user) {
         if (err) return next(err);
-        console.log(profile); 
         if (user) {
             return done(null, user);
         } else { 
