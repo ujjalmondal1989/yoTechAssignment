@@ -2,6 +2,8 @@
 var router = require('express').Router();
 var passport = require('passport');
 var multer = require('multer');
+var path = require('path');
+
 
 // custom imports
 var User = require('../models/user');
@@ -65,12 +67,19 @@ router.post('/postProfile',passportConf.isAuthenticated, function (req, res) {
             return  res.redirect('/profile');
         }
         //form file setup
-        const fileUpload = multer({storage:storage}).single('profilePic');
+        const fileUpload = multer({storage:storage,
+                fileFilter: function (req, file, callback) {
+                    var ext = path.extname(file.originalname);
+                    if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+                        callback(new Error('Only images are allowed'))
+                    }
+                    callback(null, true)
+                }
+            }).single('profilePic');
         fileUpload(req,res,function(err){
-            console.log(req.file);
             if(err){
                 req.flash('error', 'Error uploading file'); 
-                res.redirect('/profile');
+                return res.redirect('/profile');
             }
             if(req.file != undefined && req.file!= ''){
                 const newFileName = req.file.filename;

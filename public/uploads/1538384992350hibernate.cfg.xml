@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+	<session-factory>
+
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+
+		<!-- stag-yogi-app01.bos01.corp.akamai.com -->
+		<property name="hibernate.connection.url">jdbc:mysql://gwl-yogi-setup.cgefbww7rcxk.ap-south-1.rds.amazonaws.com:3306/gwlyogi</property>
+
+		<property name="hibernate.connection.username">gwluser</property>
+
+		<!-- stage@Y0g! -->
+		<property name="connection.password">gwluser2018</property>
+
+		<property name="connection.pool_size">1000</property>
+
+		<property name="hibernate.dialect">com.lms.db.CustomMySQLDialect</property>
+
+		<property name="show_sql">false</property>
+		
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.acquire_increment">2</property>
+		<property name="hibernate.c3p0.idle_test_period">300</property>
+		<property name="hibernate.c3p0.timeout">1800</property>
+		<property name="hibernate.c3p0.max_size">25</property>
+		<property name="hibernate.c3p0.min_size" >3</property>
+		<property name="hibernate.c3p0.max_statement">0</property>
+		<property name="hibernate.c3p0.preferredTestQuery">select 1;</property>
+		<property name="hibernate.c3p0.validate">true</property>
+	</session-factory>
+
+</hibernate-configuration>

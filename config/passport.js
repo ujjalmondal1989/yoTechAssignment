@@ -6,6 +6,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 // needed for facebook authentication
 var FacebookStrategy = require('passport-facebook').Strategy;
+
 // needed for google authentication
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
@@ -105,5 +106,4 @@ exports.isAuthenticated = function(req, res, next) {
         return next();
     }
     res.redirect('/');
-
 };
